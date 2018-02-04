@@ -11,10 +11,10 @@ import java.util.*;
 
 public class ReaderI18nServiceBuilder {
 
-    private final List<ResourceBundle> bundles = new ArrayList<ResourceBundle>();
+    private final Map<Locale, ResourceBundle> bundles = new HashMap<Locale, ResourceBundle>();
 
     public ReaderI18nServiceBuilder addBundle(ResourceBundle aResource) {
-        bundles.add(aResource);
+        bundles.put(aResource.getLocale(), aResource);
         return this;
     }
 
@@ -25,7 +25,7 @@ public class ReaderI18nServiceBuilder {
         }
         InputStreamReader reader = new InputStreamReader(in, Charset.forName("utf-8"));
         PropertyResourceBundle bundle = new LocalePropertyResourceBundle(aLocale, reader);
-        bundles.add(bundle);
+        bundles.put(aLocale, bundle);
         return this;
     }
 
@@ -33,10 +33,10 @@ public class ReaderI18nServiceBuilder {
         if(bundles.isEmpty()) {
             throw new IllegalStateException("There are no any bundles. Add bundles using addBundle() or addPropertyFile() methods.");
         }
-        return new ReaderI18nServiceImpl();
+        return new ReaderI18nServiceImpl(bundles);
     }
 
     public List<ResourceBundle> getBundles() {
-        return bundles;
+        return new ArrayList<ResourceBundle>(bundles.values());
     }
 }

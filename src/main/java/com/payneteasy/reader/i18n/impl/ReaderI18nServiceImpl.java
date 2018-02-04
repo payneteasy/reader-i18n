@@ -7,23 +7,27 @@ import com.payneteasy.android.sdk.reader.CardReaderProblem;
 import com.payneteasy.reader.i18n.IReaderI18nService;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ReaderI18nServiceImpl implements IReaderI18nService {
 
-    private final ReaderStateTranslator readerStateTranslator;
+    private final ReaderStateTranslator       readerStateTranslator;
+    private final Map<Locale, ResourceBundle> bundles;
 
-    public ReaderI18nServiceImpl() {
+    public ReaderI18nServiceImpl(Map<Locale, ResourceBundle> aBundles) {
+        bundles = aBundles;
         readerStateTranslator = new ReaderStateTranslator();
     }
 
     @Override
     public String translateReaderEvent(Locale aLocale, CardReaderEvent aEvent) {
-        return readerStateTranslator.translateReaderEvent(new Translator(), aEvent);
+        return readerStateTranslator.translateReaderEvent(createTranslator(aLocale), aEvent);
     }
 
     @Override
     public String translateCardError(Locale aLocale, CardError aCardError) {
-        Translator aTranslator = new Translator();
+        Translator aTranslator = createTranslator(aLocale);
         switch(aCardError.getType()) {
             case PARSE_PACKET_ERROR: return aTranslator.get("error.parse_packet_error");
             case PARSE_TRACK_ERROR: return aTranslator.get("error.parse_track_error");
@@ -56,21 +60,25 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
         return aCardError + "";
     }
 
+    private Translator createTranslator(Locale aLocale) {
+        return new Translator(aLocale, bundles);
+    }
+
     @Override
     public String translateCardReaderProblem(Locale aLocale, CardReaderProblem aCardReaderProblem) {
-        Translator translator = new Translator();
+        Translator translator = createTranslator(aLocale);
         switch(aCardReaderProblem) {
-            case BLUETOOTH_ERROR_CONNECTING: return translator.get("error.bluetooth_error_connecting");
-            case BLUETOOTH_ADAPTER_NOT_FOUND: return translator.get("error.bluetooth_adapter_not_found");
-            case BLUETOOTH_NO_PERMISSIONS: return translator.get("error.bluetooth_no_permissions");
-            case BLUETOOTH_DISABLED: return translator.get("error.bluetooth_disabled");
-            case BLUETOOTH_READER_NOT_PAIRED: return translator.get("error.bluetooth_reader_not_paired");
-            case BLUETOOTH_PAIRING_REQUEST: return translator.get("error.bluetooth_pairing_request");
-            case NETWORK_ERROR_CONNECTING: return translator.get("error.network_error_connecting");
-            case AUDIO_AUDIORECORD_INIT_ERROR: return translator.get("error.audio_audiorecord_init_error");
-            case AUDIO_AUDIORECORD_NOT_READY: return translator.get("error.audio_audiorecord_not_ready");
-            case AUDIO_POWER_INIT_ERROR: return translator.get("error.audio_power_init_error");
-            case AUDIO_READER_NOT_SUPPORTED: return translator.get("error.audio_reader_not_supported");
+            case BLUETOOTH_ERROR_CONNECTING: return translator.get("problem.bluetooth_error_connecting");
+            case BLUETOOTH_ADAPTER_NOT_FOUND: return translator.get("problem.bluetooth_adapter_not_found");
+            case BLUETOOTH_NO_PERMISSIONS: return translator.get("problem.bluetooth_no_permissions");
+            case BLUETOOTH_DISABLED: return translator.get("problem.bluetooth_disabled");
+            case BLUETOOTH_READER_NOT_PAIRED: return translator.get("problem.bluetooth_reader_not_paired");
+            case BLUETOOTH_PAIRING_REQUEST: return translator.get("problem.bluetooth_pairing_request");
+            case NETWORK_ERROR_CONNECTING: return translator.get("problem.network_error_connecting");
+            case AUDIO_AUDIORECORD_INIT_ERROR: return translator.get("problem.audio_audiorecord_init_error");
+            case AUDIO_AUDIORECORD_NOT_READY: return translator.get("problem.audio_audiorecord_not_ready");
+            case AUDIO_POWER_INIT_ERROR: return translator.get("problem.audio_power_init_error");
+            case AUDIO_READER_NOT_SUPPORTED: return translator.get("problem.audio_reader_not_supported");
         }
         return aCardReaderProblem + "";
     }
