@@ -15,6 +15,6 @@ public interface IReaderI18nService {
 
      String translateCardReaderProblem(Locale aLocale, CardReaderProblem aProblem);
 
-     String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent);
+//     String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent);
 
 }

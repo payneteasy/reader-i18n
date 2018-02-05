@@ -83,8 +83,8 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
         return aCardReaderProblem + "";
     }
 
-    @Override
-    public String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent) {
-        return null;
-    }
+//    @Override
+//    public String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent) {
+//        return null;
+//    }
 }

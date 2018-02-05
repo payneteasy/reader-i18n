@@ -74,7 +74,7 @@
             <groupId>com.payneteasy.android.reader</groupId>
             <artifactId>lib</artifactId>
             <version>${reader-lib.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
