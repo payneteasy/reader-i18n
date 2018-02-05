@@ -20,7 +20,7 @@
     <url>https://github.com/payneteasy/reader-i18n</url>
 
     <properties>
-        <reader-lib.version>1.4-42-SNAPSHOT</reader-lib.version>
+        <reader-lib.version>1.4-42</reader-lib.version>
     </properties>
 
     <scm>
@@ -42,10 +42,16 @@
     -->
     <distributionManagement>
         <repository>
-            <id>ber-tlv-release</id>
-            <name>sonatype oss RELEASE repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>file</id>
+            <name>file</name>
+            <url>file:///tmp/reader-i18n-${project.version}</url>
         </repository>
+
+        <!--<repository>-->
+            <!--<id>ber-tlv-release</id>-->
+            <!--<name>sonatype oss RELEASE repository</name>-->
+            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>-->
+        <!--</repository>-->
 
         <snapshotRepository>
             <id>ber-tlv-snapshot</id>
@@ -59,6 +65,8 @@
             <name>Store only on local disk</name>
             <url>file:///tmp/mysql-scheduler-site</url>
         </site>
+
+        
     </distributionManagement>
 
     <dependencies>
@@ -67,28 +75,28 @@
             <groupId>com.payneteasy.android.reader</groupId>
             <artifactId>lib</artifactId>
             <version>${reader-lib.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.payneteasy.android.reader</groupId>
             <artifactId>api</artifactId>
             <version>${reader-lib.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.payneteasy.android.reader.readers</groupId>
             <artifactId>readers-spire</artifactId>
-            <version>1.4-42-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${reader-lib.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.payneteasy.android.reader.readers</groupId>
             <artifactId>readers-miura</artifactId>
-            <version>1.4-42-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${reader-lib.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -112,6 +120,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    
     <build>
         <plugins>
             <plugin>
