@@ -2,6 +2,22 @@
 
 ## How to use this library
 
+### Add dependency
+
+Add repository
+
+```
+repositories {
+    maven { url "http://paynet-qa.clubber.me/reader/maven" }
+}
+```
+
+Add artifact
+```
+compile 'com.payneteasy:reader-i18n:1.0-2'
+```
+
+### Add code
 
 Creates IReaderI18nService by using ReaderI18nServiceBuilder
 ```java
