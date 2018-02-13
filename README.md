@@ -14,7 +14,7 @@ repositories {
 
 Add artifact
 ```
-compile 'com.payneteasy:reader-i18n:1.0-2'
+compile 'com.payneteasy:reader-i18n:1.0-4'
 ```
 
 ### Add code
