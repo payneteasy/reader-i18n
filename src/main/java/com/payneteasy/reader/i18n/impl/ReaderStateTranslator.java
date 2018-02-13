@@ -12,6 +12,14 @@ import com.payneteasy.reader.spire.supplementary.Spire46SupplementaryGoOnlineRes
 public class ReaderStateTranslator {
 
     public String translateReaderEvent(Translator aTranslator, CardReaderEvent aEvent) {
+        if(aEvent == null) {
+            return "aEvent is null";
+        }
+
+        if(aEvent.getState() == null) {
+            return "aEvent.getState() is null";
+        }
+
         // do not edit. It's generated automatically by PropertyFileGenerator
         switch(aEvent.getState()) {
             case NOT_CONNECTED: return aTranslator.get("reader.not_connected");
@@ -29,6 +37,9 @@ public class ReaderStateTranslator {
             case DOWNLOADING_FILE: return get_DOWNLOADING_FILE(aTranslator, (String)aEvent.getMessage());
             case SPIRE_14_RESTART_RESPONSE: {
                 SpireRestart14Response message = (SpireRestart14Response) aEvent.getMessage();
+                if(message == null) {
+                    return aTranslator.get("reader.spire_14_restart_response.unknown");
+                }
                 switch(message.response) {
                     case UNKNOWN: return aTranslator.get("reader.spire_14_restart_response.unknown");
                     case Success: return aTranslator.get("reader.spire_14_restart_response.success");
@@ -42,6 +53,9 @@ public class ReaderStateTranslator {
             }
             case SPIRE_12_TRANSACTION_MODE_INITIALISATION_RESPONSE: {
                 SpireTransactionModeInitialisation12Response message = (SpireTransactionModeInitialisation12Response) aEvent.getMessage();
+                if(message == null) {
+                    return aTranslator.get("reader.spire_12_transaction_mode_initialisation_response.unknown");
+                }
                 switch(message.response) {
                     case UNKNOWN: return aTranslator.get("reader.spire_12_transaction_mode_initialisation_response.unknown");
                     case Success: return aTranslator.get("reader.spire_12_transaction_mode_initialisation_response.success");
@@ -56,6 +70,9 @@ public class ReaderStateTranslator {
             case SPIRE_42_GET_TRANSACTION_DATA_EVENT: return get_SPIRE_42_GET_TRANSACTION_DATA_EVENT(aTranslator, (SpireGetTransactionAndApplicationData42Event)aEvent.getMessage());
             case SPIRE_46_GO_ONLINE_EVENT: {
                 SpireGoOnline46Event message = (SpireGoOnline46Event) aEvent.getMessage();
+                if(message == null) {
+                    return aTranslator.get("reader.spire_46_go_online_event.unknown");
+                }
                 switch(message.adviceRequired) {
                     case UNKNOWN: return aTranslator.get("reader.spire_46_go_online_event.unknown");
                     case NO_ADVICE_REQUIRED: return aTranslator.get("reader.spire_46_go_online_event.no_advice_required");
@@ -66,6 +83,9 @@ public class ReaderStateTranslator {
             case SPIRE_47_COMPLETE_TRANSACTION_EVENT: return get_SPIRE_47_COMPLETE_TRANSACTION_EVENT(aTranslator, (SpireCompleteTransaction47Event)aEvent.getMessage());
             case SPIRE_48_TERMINATE_TRANSACTION_EVENT: {
                 SpireTerminateTransaction48Event message = (SpireTerminateTransaction48Event) aEvent.getMessage();
+                if(message == null) {
+                    return aTranslator.get("reader.spire_48_terminate_transaction_event.unknown");
+                }
                 switch(message.reason) {
                     case UNKNOWN: return aTranslator.get("reader.spire_48_terminate_transaction_event.unknown");
                     case _0_MPOS_GENERAL_FAILURE: return aTranslator.get("reader.spire_48_terminate_transaction_event._0_mpos_general_failure");
@@ -97,6 +117,9 @@ public class ReaderStateTranslator {
             }
             case SPIRE_49_STATUS_REPORT: {
                 SpireStatusReport49Event message = (SpireStatusReport49Event) aEvent.getMessage();
+                if(message == null || message.status == null) {
+                    return aTranslator.get("reader.spire_49_status_report.unknown");
+                }
                 switch(message.status) {
                     case UNKNOWN: return aTranslator.get("reader.spire_49_status_report.unknown");
                     case CardEntryPrompted: return aTranslator.get("reader.spire_49_status_report.card_entry_prompted");
@@ -166,6 +189,9 @@ public class ReaderStateTranslator {
     }
 
     private String get_MIURA_DEVICE_STATUS_CHANGE(Translator aTranslator, MiuraDeviceStatusChangeMessage message) {
+        if(message == null || message.status == null) {
+            return aTranslator.get("reader.miura_device_status_change.unknown");
+        }
         switch (message.status) {
             case APPLICATION_SELECTION: return aTranslator.get("reader.miura_device_status_change.application_selection");
             case DEVICE_POWERED_ON: return aTranslator.get("reader.miura_device_status_change.device_powered_on");
@@ -187,6 +213,9 @@ public class ReaderStateTranslator {
     }
 
     private String get_MIURA_CARD_STATUS(Translator aTranslator, MiuraCardStatusMessage message) {
+        if(message == null) {
+            return null;
+        }
         if(message.isCardPresent) {
             if(message.isEmvCompatable) {
                 return aTranslator.get("reader.miura_device_info.chip_card_inserted");
@@ -198,6 +227,9 @@ public class ReaderStateTranslator {
     }
 
     private String get_MIURA_DEVICE_INFO(Translator aTranslator, MiuraDeviceInfoMessage aMessage) {
+        if(aMessage == null) {
+            return null;
+        }
         return aTranslator.get("reader.miura_device_info", aMessage.deviceId, aMessage.osVersion, aMessage.mpiVersion);
     }
 
