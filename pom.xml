@@ -10,7 +10,7 @@
 
     <groupId>com.payneteasy</groupId>
     <artifactId>reader-i18n</artifactId>
-    <version>1.0-3-SNAPSHOT</version>
+    <version>1.0-3</version>
 
     <name>reader texts ${project.version}</name>
 
@@ -74,7 +74,7 @@
             <groupId>com.payneteasy.android.reader</groupId>
             <artifactId>lib</artifactId>
             <version>${reader-lib.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
