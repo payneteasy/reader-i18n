@@ -1,8 +1,10 @@
 package com.payneteasy.reader.i18n.impl;
 
+import com.payneteasy.android.sdk.processing.ProcessingStageEvent;
 import com.payneteasy.android.sdk.reader.CardError;
 import com.payneteasy.android.sdk.reader.CardReaderEvent;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
+import com.payneteasy.paynet.processing.response.StatusResponse;
 import com.payneteasy.reader.i18n.IReaderI18nService;
 
 import java.util.Locale;
@@ -88,8 +90,40 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
         return aCardReaderProblem + "";
     }
 
-//    @Override
-//    public String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent) {
-//        return null;
-//    }
+    @Override
+    public String translateProcessingEvent(Locale aLocale, ProcessingStageEvent aEvent) {
+        if(aEvent == null || aEvent.type == null) {
+            return null;
+        }
+
+        Translator translator = createTranslator(aLocale);
+        switch (aEvent.type) {
+            case RESULT:                  return translateProcessingResult(translator, aEvent.response);
+            case EXCEPTION:               return translator.get("processing.event.exception", aEvent.exception);
+            case SALE_SENDING:            return translator.get("processing.event.sale_sending");
+            case ADVICE_SENDING:          return translator.get("processing.event.advice_sending");
+            case ADVICE_REQUIRED:         return translator.get("processing.event.advice_required");
+            case ERROR_3D_SECURE:         return translator.get("processing.event.error_3d_secure");
+            case SALE_RESPONSE_WAITING:   return translator.get("processing.event.sale_response_waiting");
+            case ADVICE_RESPONSE_WAITING: return translator.get("processing.event.advice_response_waiting");
+            default:                      return translator.get("processing.event.default", aEvent.type);
+        }
+
+    }
+
+    private String translateProcessingResult(Translator aTranslator, StatusResponse aResponse) {
+        if(aResponse == null || aResponse.getStatus() == null) {
+            return aTranslator.get("processing.result.null_response");
+        }
+        
+        switch (aResponse.getStatus()) {
+            case APPROVED:    return aTranslator.get("processing.result.approved");
+            case ERROR:       return aTranslator.get("processing.result.error"  , aResponse.getErrorCode(), aResponse.getErrorMessage());
+            case UNKNOWN:     return aTranslator.get("processing.result.unknown", aResponse.getErrorCode(), aResponse.getErrorMessage());
+            case DECLINED:    return aTranslator.get("processing.result.declined", aResponse.getErrorCode(), aResponse.getErrorMessage());
+            case FILTERED:    return aTranslator.get("processing.result.filtered", aResponse.getErrorCode(), aResponse.getErrorMessage());
+            case PROCESSING:  return aTranslator.get("processing.result.processing");
+            default:          return aTranslator.get("processing.result.default", aResponse.getStatus());
+        }
+    }
 }
