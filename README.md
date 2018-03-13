@@ -45,6 +45,35 @@ public void onCardError(CardError cardError) {
 public void onReaderNotSupported(CardReaderProblem aProblem) {
     setStatus("onReaderNotSupported: %s", translationService.translateCardReaderProblem(defaultLocale, aProblem));
 }
+
+@Override
+public ProcessingContinuation onCard(BankCard bankCard) {
+
+    setStatus("onCard: %s", bankCard);
+
+    return ProcessingContinuation.Builder
+            .startSaleOnline()
+            .processingBaseUrl  ( Config.SERVER_BASE_URL)
+            .merchantLogin      ( Config.MERCHANT_LOGIN )
+            .merchantControlKey ( Config.MERCHANT_KEY   )
+            .merchantEndPointId ( Config.END_POINT_ID   )
+            .orderDescription   ( "test description"    )
+            .orderInvoiceNumber ( "invoice-"+System.currentTimeMillis())
+            .orderMerchantData  ( "custom merchant data for internal use")
+            .customerPhone      ( "+7 (499) 918-64-41"  )
+            .customerEmail      ( "info@payneteasy.com" )
+            .customerCountry    ( "RUS"                 )
+            .listener(new IProcessingStageListener() {
+                @Override
+                public void onStageChanged(ProcessingStageEvent aEvent) {
+                    String message = translationService.translateProcessingEvent(defaultLocale, aEvent);
+                    setStatus(message);
+                }
+            })
+            .build();
+
+}
+
 ```
 
 See full example at [SimpleCardReaderPresenter.java](https://github.com/payneteasy/reader-example-gradle/blob/06f8a706438db254249311be759ea1b868b2e194/app/src/main/java/com/payneteasy/example/SimpleCardReaderPresenter.java#L33)
