@@ -200,12 +200,17 @@ public class ReaderStateTranslator {
             case DEVICE_REBOOTING: return aTranslator.get("reader.miura_device_status_change.device_rebooting");
             case UNKNOWN: return aTranslator.get("reader.miura_device_status_change.unknown");
             case PIN_ENTRY_EVENT: {
-                switch (message.pinEntryStatus) {
-                    case INCORRECT_PIN: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.incorrect_pin");
-                    case LAST_POSSIBLE_ATTEMPT: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.last_possible_attempt");
-                    case PIN_ENTRY_COMPLETED: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_entry_completed");
-                    case PIN_ENTRY_ERROR: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_entry_error");
-                    case PIN_OK: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_ok");
+
+                if(message.pinEntryStatus != null) {
+                    switch (message.pinEntryStatus) {
+                        case INCORRECT_PIN: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.incorrect_pin");
+                        case LAST_POSSIBLE_ATTEMPT: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.last_possible_attempt");
+                        case PIN_ENTRY_COMPLETED: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_entry_completed");
+                        case PIN_ENTRY_ERROR: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_entry_error");
+                        case PIN_OK: return aTranslator.get("reader.miura_device_status_change.pin_entry_event.pin_ok");
+                    }
+                } else {
+                    return aTranslator.get("reader.miura_device_status_change.pin_entry_event.enter_pin");
                 }
             }
         }
