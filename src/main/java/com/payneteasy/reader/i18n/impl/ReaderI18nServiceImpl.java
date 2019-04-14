@@ -103,16 +103,18 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
 
         Translator translator = createTranslator(aLocale);
         switch (aEvent.type) {
-            case RESULT:                  return translateProcessingResult(translator, aEvent.response);
-            case EXCEPTION:               return translator.get("processing.event.exception", aEvent.exception);
-            case SALE_SENDING:            return translator.get("processing.event.sale_sending");
-            case ADVICE_SENDING:          return translator.get("processing.event.advice_sending");
-            case ADVICE_REQUIRED:         return translator.get("processing.event.advice_required");
-            case ERROR_3D_SECURE:         return translator.get("processing.event.error_3d_secure");
-            case ERROR_BAD_CREDENTIALS:   return translator.get("processing.event.error_bad_credentials");
-            case SALE_RESPONSE_WAITING:   return translator.get("processing.event.sale_response_waiting");
-            case ADVICE_RESPONSE_WAITING: return translator.get("processing.event.advice_response_waiting");
-            default:                      return translator.get("processing.event.default", aEvent.type);
+            case RESULT:                    return translateProcessingResult(translator, aEvent.response);
+            case EXCEPTION:                 return translator.get("processing.event.exception", aEvent.exception);
+            case SALE_SENDING:              return translator.get("processing.event.sale_sending");
+            case ADVICE_SENDING:            return translator.get("processing.event.advice_sending");
+            case ADVICE_REQUIRED:           return translator.get("processing.event.advice_required");
+            case ERROR_3D_SECURE:           return translator.get("processing.event.error_3d_secure");
+            case ERROR_BAD_CREDENTIALS:     return translator.get("processing.event.error_bad_credentials");
+            case SALE_RESPONSE_WAITING:     return translator.get("processing.event.sale_response_waiting");
+            case ADVICE_RESPONSE_WAITING:   return translator.get("processing.event.advice_response_waiting");
+            case REVERSAL_SENDING:          return translator.get("processing.event.reversal_sending");
+            case REVERSAL_RESPONSE_WAITING: return translator.get("processing.event.reversal_response_waiting");
+            default:                        return translator.get("processing.event.default", aEvent.type);
         }
 
     }
