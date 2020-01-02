@@ -159,6 +159,7 @@ public class ReaderStateTranslator {
             case SPIRE_53_SWIPED_CARD_EVENT: return get_SPIRE_53_SWIPED_CARD_EVENT(aTranslator, (SpireProcessSwipedCard_52Event)aEvent.getMessage());
             case SPIRE_53_SWIPED_TRANSACTION_EVENT: return get_SPIRE_53_SWIPED_TRANSACTION_EVENT(aTranslator, (SpireGetSwipedTransactionData53Event)aEvent.getMessage());
             case SPIRE_RESTARTING: return aTranslator.get("reader.spire_restarting");
+            case TRY_TAP_CONTACTLESS_CARD_AGAIN: return aTranslator.get("reader.try_tap_contactless_card_again");
         }
 
         return "unknown state " + aEvent.getState();

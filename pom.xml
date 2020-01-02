@@ -19,7 +19,7 @@
     <url>https://github.com/payneteasy/reader-i18n</url>
 
     <properties>
-        <reader-lib.version>1.4-79</reader-lib.version>
+        <reader-lib.version>1.4-86</reader-lib.version>
     </properties>
 
     <scm>
