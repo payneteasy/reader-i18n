@@ -4,6 +4,7 @@ import com.payneteasy.android.sdk.processing.ProcessingStageEvent;
 import com.payneteasy.android.sdk.reader.CardError;
 import com.payneteasy.android.sdk.reader.CardReaderEvent;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
+import com.payneteasy.android.sdk.util.Strings;
 import com.payneteasy.paynet.processing.response.StatusResponse;
 import com.payneteasy.reader.i18n.IReaderI18nService;
 
@@ -30,7 +31,7 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
     public String translateCardError(Locale aLocale, CardError aCardError) {
         Translator translator = createTranslator(aLocale);
         if(aCardError == null || aCardError.getType() == null) {
-            return translator.get("error.unknown");
+            return translator.get("error.unknown") + getCardErrorMessage(aCardError);
         }
         switch(aCardError.getType()) {
             case PARSE_PACKET_ERROR:                        return translator.get("error.parse_packet_error");
@@ -59,9 +60,17 @@ public class ReaderI18nServiceImpl implements IReaderI18nService {
             case CONTACTLESS_ASK_CHIP_USE_ICC:              return translator.get("error.contactless_ask_chip_use_icc");
             case CONTACTLESS_HARDWARE_ERROR:                return translator.get("error.contactless_hardware_error");
             case CONTACTLESS_REQUIRED_EMV_FINAL_ADVICE:     return translator.get("error.contactless_required_emv_final_advice");
-            case UNKNOWN:                                   return translator.get("error.unknown");
+            case UNKNOWN:                                   return translator.get("error.unknown") + getCardErrorMessage(aCardError);
         }
         return aCardError + "";
+    }
+
+    private String getCardErrorMessage(CardError aCardError) {
+        if(aCardError == null || Strings.isEmpty(aCardError.getErrorMessage())) {
+            return "";
+        }
+
+        return " : " + aCardError.getErrorMessage();
     }
 
     private Translator createTranslator(Locale aLocale) {
